@@ -1,0 +1,50 @@
+* {
+	margin: 0;
+	padding: 0;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+input::-webkit-input-placeholder {
+	color: rgba(255, 0, 0, 0.2);
+}
+
+input::-moz-placeholder {
+	/* Mozilla Firefox 19+ */
+	color: rgba(255, 0, 0, 0.2);
+}
+
+input:-moz-placeholder {
+	/* Mozilla Firefox 4 to 18 */
+	color: rgba(255, 0, 0, 0.2);
+}
+
+input:-ms-input-placeholder {
+	/* Internet Explorer 10-11 */
+	color: rgba(255, 0, 0, 0.2);
+}
+
+button,
+input {
+	background: none;
+	outline: none;
+	border: none;
+}
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
+	text-decoration: none;
+}
+
+body {
+	width: 100%;
+	min-width: 1000px;
+	overflow-x: hidden;
+	text-align: center;
+	background: #FAEBD7;
+}

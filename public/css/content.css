@@ -1,0 +1,271 @@
+body {
+	background: #fff;
+}
+
+#app,
+#app .container,
+#app .container .title_bar {
+	width: 100%;
+}
+
+.clearfix {
+	clear: both;
+}
+
+#app {
+	text-shadow: 1px 1px 5px #3CB371;
+}
+
+#app .container {
+	padding-top: 20px;
+}
+
+#app .container .c-box {
+	background: #FAEBD7;
+}
+
+#app .container .left {
+	float: left;
+	width: 20%;
+}
+
+#app .container .right {
+	float: right;
+	width: 80%;
+}
+
+#app .container .title_bar {
+	padding-bottom: 20px;
+	padding-top: 20px;
+	margin-bottom: 20px;
+}
+
+#app .container .bar {
+	width: 1000px;
+	height: 50px;
+	line-height: 50px;
+	border-radius: 50px;
+	background: #fff;
+	color: #D2691E;
+	margin: 0 auto;
+	font-size: 20px;
+	box-shadow: 1px 1px 25px #00BFFF inset;
+}
+
+#app .container .bar span {
+	color: #3CB371;
+}
+
+@keyframes frame {
+	0% {
+		transform: scale(1.0) rotate(0deg);
+	}
+
+	50% {
+		transform: scale(0.8) rotate(5deg);
+	}
+
+	100% {
+		transform: scale(1.0) rotate(0deg);
+	}
+}
+
+#app .container .item1:hover,
+#app .container .item:hover {
+	transform-origin: 50% 50%;
+	animation: frame 2s;
+}
+
+#app .container .item,
+#app .container .item1 {
+	height: 50px;
+	line-height: 50px;
+}
+
+#app .container .item {
+	width: 100%;
+	font-size: 20px;
+	/* color: #fff; */
+	margin-bottom: 10px;
+}
+
+#app .container .item1 {
+	font-size: 15px;
+	/* color: #fff; */
+	background: #fff;
+	margin: 10px;
+}
+
+#app .container .show {
+	width: 100%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+#app .container .inner {
+	margin-left: 10px;
+	padding-top: 50px;
+	padding-bottom: 50px;
+	height: 500px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+#app .container .inner table {
+	margin: 0 auto;
+	color: #D2691E;
+	font-size: 15px;
+}
+
+#app .container .inner table thead {
+	background: yellow;
+}
+
+#app .container .inner table tbody {
+	background: #fff;
+}
+
+.w16 {
+	width: 16.6%;
+}
+
+#app .container .inner table th,
+#app .container .inner table td {
+	box-shadow: 1px 1px 5px #00BFFF;
+	height: 30px;
+	border-radius: 20px;
+	padding: 0 5px;
+}
+
+.input {
+	width: 80%;
+	height: 25px;
+	text-align: center;
+	color: #D2691E;
+	font-size: 15px;
+}
+
+#app .container .find_users_mes,
+#app .container .find_books_mes {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background: #fff;
+}
+
+#app .container .find_books_mes {
+	margin-bottom: 10px;
+}
+
+#app .container .find_users_mes {
+	margin-left: 100px;
+	margin-right: 100px;
+	margin-top: 20px;
+}
+
+#app .container .find_books_mes .input,
+#app .container .find_users_mes .input {
+	width: 150px;
+	margin-right: 20px;
+}
+
+#app .container .find_books_mes .table_not_me,
+#app .container .find_users_mes .table_not_me {
+	margin-top: 10px;
+}
+
+#app .container .find_books_mes .input1 {
+	width: 100px;
+	margin: 5px;
+}
+
+#app .container .tell {
+	background: #fff;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-bottom: 10px;
+	color: rgba(255, 0, 0, 0.5);
+}
+
+.will {
+	text-shadow: 1px 1px 5px #f00 !important;
+}
+
+#app .container .box_13 {
+	margin: 10px 20px 0;
+	background: #fff;
+}
+
+#app .container .box_13 input {
+	width: 200px !important;
+	margin: 20px 10px;
+}
+
+#app .container .box_13 .show_book {
+	padding: 10px 10px 0;
+	height: 30px;
+}
+
+#app .container .box_13 .span {
+	display: inline-block;
+	width: 150px;
+	background: #fff;
+	height: 30px;
+	line-height: 30px;
+	border-radius: 30px;
+	margin: 0 5px;
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+
+#app .container .box_14 {
+	width: 100px;
+	height: 50px;
+	background: #fff;
+	line-height: 50px;
+	font-size: 15px;
+	color: #40b473;
+	border-radius: 50px;
+	margin: 50px auto 0;
+}
+
+._tt {
+	margin-top: 20px;
+}
+
+.no {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background: #fff;
+}
+
+.w33 {
+	width: 33.3%;
+}
+
+.give_back {
+	border-radius: 10px !important;
+	width: 70px !important;
+}
+
+.small::-webkit-input-placeholder {
+	font-size: 12px;
+}
+
+.small::-moz-placeholder {
+	/* Mozilla Firefox 19+ */
+	font-size: 12px;
+}
+
+.small:-moz-placeholder {
+	/* Mozilla Firefox 4 to 18 */
+	font-size: 12px;
+}
+
+.small:-ms-input-placeholder {
+	/* Internet Explorer 10-11 */
+	font-size: 12px;
+}
+
+.small {
+	width: 150px !important;
+}

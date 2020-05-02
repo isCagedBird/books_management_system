@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>图书借阅管理系统-已登录</title>
+	<link rel="stylesheet" type="text/css" href="../css/common.css" />
+	<link rel="stylesheet" type="text/css" href="/css/content.css" />
+	<script src="/scripts/vue" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+	<!-- 在该页面绑定事件较多，可以做事件委托处理并依然阻止事件冒泡 -->
+	<div id="app">
+		<div class="container">
+			<div class="title_bar c-box">
+				<div class="bar"><span>{{me.username}}</span> 您好，欢迎使用图书借阅管理系统 <span>{{time}}</span></div>
+			</div>
+			<div class="left" v-on:click.stop="leftClickHandle($event)">
+				<div :class="now === String(index)?'will item c-box':'item c-box'" :key="index"
+					v-for="(item,index) in main" :ii="index">
+					{{item.this_item}}
+				</div>
+				<div class="show c-box" v-if="now !== ''">
+					<div v-show="now === '0' ? true : !(!me.primary_account && ( index === 1 || index === 2 ))"
+						:class="now + String(index) === what_ii_is?'will item1':'item1'" :key="index"
+						v-for="(item,index) in main[now].arr" :ii="now + String(index)">{{item}}</div>
+				</div>
+				<div style="margin-top:10px;" class="item c-box"
+					v-if="what_ii_is === '01' || (what_ii_is === '12' && me.primary_account) || (what_ii_is === '11' && me.primary_account)"
+					ii="_update">更新</div>
+			</div>
+			<div class="right" v-on:change.stop="rightChangeHandle($event)" v-on:click.stop="rightClickHandle($event)">
+				<div class="inner c-box">
+					<!-- 1 -->
+					<div v-if="what_ii_is === '01' || (what_ii_is === '12' && me.primary_account) || (what_ii_is === '11' && me.primary_account)"
+						class="tell">请在输入更新内容后，点击左侧的“更新”按钮完成更新操作</div>
+					<!-- 2 -->
+					<table v-if="what_ii_is === '00' || what_ii_is === '01'">
+						<thead>
+							<tr>
+								<th class="w16">登录账号</th>
+								<th class="w16">登录密码</th>
+								<th class="w16">联系号码</th>
+								<th class="w16">联系地址</th>
+								<th class="w16">管理员账户</th>
+								<th class="w16">借阅书籍数</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>{{me.username}}</td>
+								<td>{{me.password}}</td>
+								<td v-if="what_ii_is === '01'">
+									<input class="input c-box" type="text" placeholder="输入更新内容" ii="phone_num">
+								</td>
+								<td v-else>{{me.phone_num}}</td>
+								<td v-if="what_ii_is === '01'">
+									<input class="input c-box" type="text" placeholder="输入更新内容" v-model="me.address">
+								</td>
+								<td v-else>{{me.address}}</td>
+								<td>{{me.primary_account?'是':'否'}}</td>
+								<td>{{me.books.length}}</td>
+							</tr>
+						</tbody>
+					</table>
+					<!-- 3 -->
+					<div v-if="what_ii_is === '00' && me.primary_account" class="find_users_mes">
+						<input class="input c-box" type="text" ii="find_users_mes"><span>输入账户名查找</span>
+						<table v-if="not_me !== ''" class="table_not_me">
+							<tbody>
+								<tr>
+									<td class="w16">{{not_me.username}}</td>
+									<td class="w16">{{not_me.password}}</td>
+									<td class="w16">{{not_me.phone_num}}</td>
+									<td class="w16">{{not_me.address}}</td>
+									<td class="w16">{{not_me.primary_account?'是':'否'}}</td>
+									<td class="w16">{{not_me.books.length}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div v-if="(!me.primary_account && what_ii_is==='00' && me.books.length !== 0)
+						 || (me.primary_account && what_ii_is==='00' && not_me !== '' && not_me.books.length !== 0)" class="_tt">
+						<table>
+							<thead>
+								<tr>
+									<th class="w33">书籍名称</th>
+									<th class="w33">书籍编号</th>
+									<th class="w33">借出日期</th>
+								</tr>
+							</thead>
+							<tbody v-if="!me.primary_account">
+								<tr :key="index" v-for="(item,index) in me.books">
+									<td>{{item.name}}</td>
+									<td>{{item.number}}</td>
+									<td>{{item.date}}</td>
+								</tr>
+							</tbody>
+							<tbody v-else>
+								<tr :key="index" v-for="(item,index) in not_me.books">
+									<td>{{item.name}}</td>
+									<td>{{item.number}}</td>
+									<td>{{item.date}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!-- 4 -->
+					<div v-if="what_ii_is === '10' || what_ii_is === '11' || what_ii_is === '12' || what_ii_is === '14'"
+						class="find_books_mes">
+						<input class="input c-box" type="text" ii="find_books_mes"
+							:disabled="!(now === '1' && what_ii_is === '10' || now === '1' && what_ii_is === '14')"
+							v-if="(what_ii_is === '14' && !me.primary_account) || (what_ii_is === '10' && !me.primary_account) || me.primary_account">
+						<span
+							v-if="(what_ii_is === '14' && !me.primary_account) || (what_ii_is === '10' && !me.primary_account) || me.primary_account">
+							{{(now === '1' && what_ii_is === '10' || now === '1' && what_ii_is === '14')?'输入图书编号查找':''}}
+						</span>
+						<table class="table_not_me"
+							v-if="(what_ii_is === '14' && !me.primary_account) || (what_ii_is === '10' && !me.primary_account) || me.primary_account">
+							<thead>
+								<tr>
+									<th class="w16">书名</th>
+									<th class="w16">编号</th>
+									<th class="w16">类别</th>
+									<th class="w16">作者</th>
+									<th class="w16">出版社</th>
+									<th class="w16">库存数</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td v-if="what_ii_is === '12' || what_ii_is === '11'">
+										<input class="input input1 c-box" type="text" v-model="new_book.name"
+											:placeholder="what_ii_is === '12'?'必填项':'选填项'">
+									</td>
+									<td v-else>{{book.name}}</td>
+									<td v-if="what_ii_is === '12'"></td>
+									<td v-else-if="what_ii_is === '11'">
+										<input class="input input1 c-box" type="text" v-model="new_book.number"
+											placeholder="必填项">
+									</td>
+									<td v-else>{{book.number}}</td>
+									<td v-if="what_ii_is === '12' || what_ii_is === '11'">
+										<input class="input input1 c-box" type="text" v-model="new_book.type"
+											:placeholder="what_ii_is === '12'?'必填项':'选填项'">
+									</td>
+									<td v-else>{{book.type}}</td>
+									<td v-if="what_ii_is === '12' || what_ii_is === '11'">
+										<input class="input input1 c-box" type="text" v-model="new_book.author"
+											:placeholder="what_ii_is === '12'?'必填项':'选填项'">
+									</td>
+									<td v-else>{{book.author}}</td>
+									<td v-if="what_ii_is === '12' || what_ii_is === '11'">
+										<input class="input input1 c-box" type="text" v-model="new_book.publisher"
+											:placeholder="what_ii_is === '12'?'必填项':'选填项'">
+									</td>
+									<td v-else>{{book.publisher}}</td>
+									<td v-if="what_ii_is === '12' || what_ii_is === '11'">
+										<input class="input input1 c-box small" type="text" v-model="new_book.nn"
+											:placeholder="what_ii_is === '12'?'必填项(非数字更新无效)':'选填项(非数字更新无效)'">
+									</td>
+									<td v-else>{{book.nn}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!-- 5 归还处理-->
+					<div v-if="what_ii_is === '13' && me.primary_account">
+						<div class="box_13">提示:当借阅者前来归还图书后,管理员才可以进行此操作</div>
+						<div class="box_13">
+							<input class="input c-box" type="text" ii="find_users_mes">
+							<span>输入账户名查找该账户借阅情况</span>
+							<div :key="index" class="show_book c-box" v-for="(item,index) in not_me.books">
+								<div class="span">{{item.name}}</div>
+								<div class="span">{{item.number}}</div>
+								<div class="span">{{item.date}}</div>
+								<div class="span give_back" ii="return" :books_number='item.number'>点击归还</div>
+							</div>
+						</div>
+						<div v-if="not_me !== ''" class="box_13">{{`${not_me.username} 借阅情况`}}</div>
+					</div>
+					<div v-else-if="what_ii_is === '13' && !me.primary_account">
+						<div class="no">请至图书馆归还书籍</div>
+					</div>
+					<!-- 6 借阅处理-->
+					<div v-if="what_ii_is === '14' && book !== ''">
+						<div v-if="!me.primary_account && book.nn > 0" class="box_14" ii="borrow">借阅这本书</div>
+						<div v-else-if="!me.primary_account && Number(book.nn) === 0" class="no">该书暂无库存</div>
+						<div v-if="me.primary_account" class="no">管理员账户不能进行该操作</div>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<script src="/scripts/other/content.js" type="text/javascript" charset="utf-8"></script>
+</body>
+
+</html>
