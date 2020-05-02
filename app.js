@@ -19,7 +19,9 @@ app.use(cookieParser());
 
 /* 开放公开目录 */
 app.use('/', express.static(path.join(__dirname, 'public')));
+// 指定 2.6.11 的版本
 js_router.use('/vue', express.static(path.join(__dirname, 'node_modules/_vue@2.6.11@vue/dist/vue.js')));
+// js_router.use('/vue', express.static(path.join(__dirname, 'node_modules/_vue@2.6.11@vue/dist/vue.min.js')));
 js_router.use('/other', express.static(path.join(__dirname, 'tools/all_will_use_scripts')));
 app.use('/scripts', js_router);
 
