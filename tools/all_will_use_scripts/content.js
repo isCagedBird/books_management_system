@@ -12,6 +12,9 @@
 			what_ii_is: '', //状态标志位2
 			time_id: null, //节流状态位
 			max: '', //数据库书籍数
+			searchNotByNumberBoxShow: false,
+			searchNotByNumberBooks: [], // 非编号查找书籍内存缓冲
+			searchWayValue: '', // 非编号查找书籍标识 book_name author publisher
 			/* 基本不变的内容 */
 			time: '', //登录时间
 			me: '', //当前账户内存缓冲
@@ -32,7 +35,24 @@
 				]
 			}]
 		},
+		watch: {
+			what_ii_is (newV) {
+				(newV === '10' || newV === '14') ? (
+					this.searchNotByNumberBoxShow = true
+				) : (
+						this.searchNotByNumberBoxShow = false
+					)
+			}
+		},
 		mounted () {
+			/* const fn = () => {
+				this.searchNotByNumberBoxShow = !this.searchNotByNumberBoxShow
+				setTimeout(() => {
+					fn()
+				}, 2000)
+			}
+			fn() */
+
 			let index = document.cookie
 				.match(/index=[0-9a-zA-Z_]+\;?/g)[0]
 				.replace('index=', '')
@@ -135,7 +155,8 @@
 							this.not_me._id
 						);
 					default:
-						;
+						this.searchNotByNumberBoxShow && (this.searchNotByNumberBoxShow = false)
+							;
 				}
 			},
 			return_core (number, id) {

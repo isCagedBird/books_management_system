@@ -10,8 +10,35 @@
 </head>
 
 <body>
-	<!-- 在该页面绑定事件较多，可以做事件委托处理并依然阻止事件冒泡 -->
 	<div id="app">
+		<transition name="searchNotByNumberBox-frame">
+			<div v-show="searchNotByNumberBoxShow" id="searchNotByNumberBox">
+				<div class="searchNotByNumberBoxInner">
+					<div>
+						<input type="text"><br>
+						<div v-for="(item,index) in searchNotByNumberBooks" :key="`searchNotByNumber_${index}`">
+							<div><span>书名</span>{{item.name}}</div>
+							<div><span>编号</span>{{item.number}}</div>
+							<div><span>类别</span>{{item.type}}</div>
+							<div><span>作者</span>{{item.author}}</div>
+							<div><span>出版社</span>{{item.publisher}}</div>
+							<div><span>库存数</span>{{item.nn}}</div>
+						</div>
+					</div>
+					<div>
+						<span>* 按照以下规则寻找到相关书籍后</span>
+						<span>* 凭借其数据库中存储的唯一编号在</span>
+						<span>* '书籍相关管理' > '借阅处理' 搜索借阅</span>
+						<div><input type="radio" name="search_way" value="book_name" v-model="searchWayValue">按照书名搜索
+						</div>
+						<div><input type="radio" name="search_way" value="author" v-model="searchWayValue">按照作者搜索</div>
+						<div><input type="radio" name="search_way" value="publisher" v-model="searchWayValue">按照出版社搜索
+						</div>
+					</div>
+				</div>
+			</div>
+		</transition>
+		<!-- 在该页面绑定事件较多，可以做事件委托处理并依然阻止事件冒泡 -->
 		<div class="container">
 			<div class="title_bar c-box">
 				<div class="bar"><span>{{me.username}}</span> 您好，欢迎使用图书借阅管理系统 <span>{{time}}</span></div>
@@ -128,39 +155,43 @@
 									<th class="w16">库存数</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody v-if="what_ii_is === '12' || what_ii_is === '11'">
 								<tr>
-									<td v-if="what_ii_is === '12' || what_ii_is === '11'">
+									<td>
 										<input class="input input1 c-box" type="text" v-model="new_book.name"
 											:placeholder="what_ii_is === '12'?'必填项':'选填项'">
 									</td>
-									<td v-else>{{book.name}}</td>
 									<td v-if="what_ii_is === '12'"></td>
 									<td v-else-if="what_ii_is === '11'">
 										<input class="input input1 c-box" type="text" v-model="new_book.number"
 											placeholder="必填项">
 									</td>
-									<td v-else>{{book.number}}</td>
-									<td v-if="what_ii_is === '12' || what_ii_is === '11'">
+									<td>
 										<input class="input input1 c-box" type="text" v-model="new_book.type"
 											:placeholder="what_ii_is === '12'?'必填项':'选填项'">
 									</td>
-									<td v-else>{{book.type}}</td>
-									<td v-if="what_ii_is === '12' || what_ii_is === '11'">
+									<td>
 										<input class="input input1 c-box" type="text" v-model="new_book.author"
 											:placeholder="what_ii_is === '12'?'必填项':'选填项'">
 									</td>
-									<td v-else>{{book.author}}</td>
-									<td v-if="what_ii_is === '12' || what_ii_is === '11'">
+									<td>
 										<input class="input input1 c-box" type="text" v-model="new_book.publisher"
 											:placeholder="what_ii_is === '12'?'必填项':'选填项'">
 									</td>
-									<td v-else>{{book.publisher}}</td>
-									<td v-if="what_ii_is === '12' || what_ii_is === '11'">
+									<td>
 										<input class="input input1 c-box small" type="text" v-model="new_book.nn"
 											:placeholder="what_ii_is === '12'?'必填项(非数字更新无效)':'选填项(非数字更新无效)'">
 									</td>
-									<td v-else>{{book.nn}}</td>
+								</tr>
+							</tbody>
+							<tbody v-else>
+								<tr>
+									<td>{{book.name}}</td>
+									<td>{{book.number}}</td>
+									<td>{{book.type}}</td>
+									<td>{{book.author}}</td>
+									<td>{{book.publisher}}</td>
+									<td>{{book.nn}}</td>
 								</tr>
 							</tbody>
 						</table>
