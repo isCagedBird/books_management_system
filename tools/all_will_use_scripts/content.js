@@ -14,7 +14,8 @@
 			max: '', //数据库书籍数
 			searchNotByNumberBoxShow: false,
 			searchNotByNumberBooks: [], // 非编号查找书籍内存缓冲
-			searchWayValue: '', // 非编号查找书籍标识 book_name author publisher
+			searchWayValue: 'name', // 非编号查找书籍标识 name author publisher
+			searchValue: '',
 			/* 基本不变的内容 */
 			time: '', //登录时间
 			me: '', //当前账户内存缓冲
@@ -42,6 +43,35 @@
 				) : (
 						this.searchNotByNumberBoxShow = false
 					)
+			},
+			searchValue (newV, oldV) {
+				// console.info(`"${newV}" "${oldV}"`)
+				newV = newV.trim()
+				if (newV === '') {
+					return
+				}
+				oldV = oldV.trim()
+				/* console.info(`"${newV}" "${oldV}"`) */
+				if (newV === oldV) {
+					return
+				}
+				console.info({
+					[this.searchWayValue]: newV
+				})
+				this.ajax('/books/api/take_mes', {
+					[this.searchWayValue]: newV
+				})
+					.then(result => {
+						console.info(result)
+						this.searchNotByNumberBooks.length !== 0 && (this.searchNotByNumberBooks = [])
+						result.length !== 0 && (this.searchNotByNumberBooks.push(...result))
+					})
+					.catch(error => {
+						console.info(error)
+					})
+					.finally(() => {
+						this.searchValue = ''
+					})
 			}
 		},
 		mounted () {
@@ -342,5 +372,5 @@
 		}
 	});
 
-	// window.VM = VM;
+	/* window.VM = VM; */
 })();

@@ -30,7 +30,7 @@ app.all('*', (req, res, next) => {
 	// res.setHeader('Access-Control-Allow-Origin', '*');//允许跨域资源访问
 	/* 
 	 *	一些api接口对post请求体数据只做了客户端JS校验,未做服务端JS校验
-	 *	所以还是禁用ajax跨域资源访问
+	 *	必需要禁用ajax跨域资源访问
 	 */
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST'); //仅允许HTTP的get post方法,禁用其他mothods
 	// res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');

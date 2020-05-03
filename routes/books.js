@@ -28,8 +28,8 @@ router.post('/api/take_mes', (req, res) => {
 				});
 		} else if (data !== null && data.number !== undefined) {
 			find(db.Books, {
-					number: data.number
-				})
+				number: data.number
+			})
 				.then((_data) => {
 					/* console.info(_data); */
 					res.send(_data);
@@ -37,6 +37,18 @@ router.post('/api/take_mes', (req, res) => {
 					console.info('查数据失败', err);
 					res.send([]);
 				});
+		} else if (data !== null && (data.name || data.author || data.publisher)) { // 传参但不是 编号
+			find(db.Books, data)
+				.then((_data) => {
+					/* console.info(_data); */
+					res.send(_data);
+				})
+				.catch((err) => {
+					console.info('查数据失败', err);
+					res.send([]);
+				});
+		} else {
+			res.send({ mes: 'request params error' })
 		}
 	});
 });

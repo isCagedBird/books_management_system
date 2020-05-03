@@ -15,7 +15,7 @@
 			<div v-show="searchNotByNumberBoxShow" id="searchNotByNumberBox">
 				<div class="searchNotByNumberBoxInner">
 					<div>
-						<input type="text"><br>
+						<input type="text" v-model.lazy="searchValue"><br>
 						<div v-for="(item,index) in searchNotByNumberBooks" :key="`searchNotByNumber_${index}`">
 							<div><span>书名</span>{{item.name}}</div>
 							<div><span>编号</span>{{item.number}}</div>
@@ -29,7 +29,7 @@
 						<span>* 按照以下规则寻找到相关书籍后</span>
 						<span>* 凭借其数据库中存储的唯一编号在</span>
 						<span>* '书籍相关管理' > '借阅处理' 搜索借阅</span>
-						<div><input type="radio" name="search_way" value="book_name" v-model="searchWayValue">按照书名搜索
+						<div><input type="radio" name="search_way" value="name" v-model="searchWayValue">按照书名搜索
 						</div>
 						<div><input type="radio" name="search_way" value="author" v-model="searchWayValue">按照作者搜索</div>
 						<div><input type="radio" name="search_way" value="publisher" v-model="searchWayValue">按照出版社搜索
