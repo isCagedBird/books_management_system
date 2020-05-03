@@ -19,8 +19,8 @@ router.post('/register', (req, res) => {
 
 	let Users = db.Users;
 	find(Users, {
-			username: req.body.username
-		})
+		username: req.body.username
+	})
 		.then((data) => {
 			console.info(data.length, data);
 			let flag = false;
@@ -53,8 +53,8 @@ router.post('/register', (req, res) => {
 			//	保证只能有一个物业账号
 			if (req.body.is_main === 'Y') {
 				find(db.Users, {
-						primary_account: true
-					})
+					primary_account: true
+				})
 					.then((data) => {
 						data.length === 0 ? fn(true) : fn(false);
 					}, (err) => {
@@ -90,8 +90,8 @@ router.post('/login', (req, res) => {
 
 	let Users = db.Users;
 	find(Users, {
-			username: req.body.username
-		})
+		username: req.body.username
+	})
 		.then((data) => {
 			let flag = false;
 			/* console.info(data.length, data); */
@@ -187,8 +187,8 @@ router.post('/api/take_mes', (req, res) => {
 			//查询到的全部数据库数据不能缓存到客户端内存中
 
 			find(db.Users, {
-					_id: data.index
-				})
+				_id: data.index
+			})
 				.then((_data) => {
 					for (let i = 0; i < _data.length; i++) { //约束条件下length最大是1
 						_data[i].__v = null;
@@ -200,8 +200,8 @@ router.post('/api/take_mes', (req, res) => {
 				});
 		} else if (data !== null && data.username !== undefined) {
 			find(db.Users, {
-					username: data.username
-				})
+				username: data.username
+			})
 				.then((data) => {
 					for (let i = 0; i < data.length; i++) { //约束条件下length值最大为1
 						data[i].__v = null;
@@ -226,14 +226,14 @@ router.post('/api/return_book', (req, res) => {
 		/* console.info(data === null, data, typeof data); */
 
 		update(db.Users, {
-				_id: data.id
-			}, {
-				$pull: {
-					'books': {
-						number: data.number
-					}
+			_id: data.id
+		}, {
+			$pull: {
+				'books': {
+					number: data.number
 				}
-			})
+			}
+		})
 			.then(result => {
 				if (result.n === 1 && result.ok === 1 && result.nModified === 1) {
 					//更新成功 { n: 1, nModified: 1, ok: 1 }
@@ -267,9 +267,9 @@ router.post('/api/add_book', (req, res) => {
 		/* console.info(data === null, data, typeof data); */
 
 		find(db.Users, {
-				_id: data.borrower_id, //唯一用户ID
-				'books.number': data.number //唯一书籍编号
-			})
+			_id: data.borrower_id, //唯一用户ID
+			'books.number': data.number //唯一书籍编号
+		})
 			.then(result => {
 				if (result.length === 0) {
 					//length为0,即result为[]
@@ -322,7 +322,11 @@ router.post('/api/add_book', (req, res) => {
 			})
 			.catch(error => {
 				console.info(error);
-				res.send([]);
+				if (error === '该书籍借阅中') {
+					res.send({ '-1': '该书籍借阅中' });
+				} else {
+					res.send([]);
+				}
 			});
 
 	});

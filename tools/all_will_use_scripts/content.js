@@ -10,7 +10,7 @@
 			book: '', //查找书籍内存缓冲
 			not_me: '', //查找账户内存缓冲
 			what_ii_is: '', //状态标志位2
-			time_id: null, //节流状态位
+			time_id: false, //节流状态位
 			max: '', //数据库书籍数
 			searchNotByNumberBoxShow: false,
 			searchNotByNumberBooks: [], // 非编号查找书籍内存缓冲
@@ -208,10 +208,11 @@
 			borrow () {
 				//此方法非管理员账户可调用
 				//该回调做节流操作
-				if (this.time_id !== null) {
+				if (this.time_id) {
 					alert('请等待至少5秒');
 					return;
 				}
+				this.time_id = true
 				let obj = {
 					borrower_id: this.me._id,
 					name: this.book.name,
@@ -223,15 +224,20 @@
 					.then(data => {
 						/* console.info(data); */
 						if (JSON.stringify(data) !== '[]') {
-							this.me = data;
-							this.book.nn -= 1;
+							if (data['-1']) {
+								alert(data['-1'])
+							} else {
+								this.me = data;
+								this.book.nn -= 1;
+								alert('你已成功借阅')
+							}
 						}
-					}, error => {
+					})
+					.catch(error => {
 						console.info(error);
-					});
-				this.time_id = setTimeout(() => {
-					clearTimeout(this.time_id);
-					this.time_id = null;
+					})
+				setTimeout(() => {
+					this.time_id = false
 				}, 5000);
 			},
 			ajax (url, data = null, methods = 'post') {

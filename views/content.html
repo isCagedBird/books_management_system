@@ -49,9 +49,22 @@
 					{{item.this_item}}
 				</div>
 				<div class="show c-box" v-if="now !== ''">
-					<div v-show="now === '0' ? true : !(!me.primary_account && ( index === 1 || index === 2 ))"
-						:class="now + String(index) === what_ii_is?'will item1':'item1'" :key="index"
-						v-for="(item,index) in main[now].arr" :ii="now + String(index)">{{item}}</div>
+					<div v-if="now === '0'">
+						<div :class="now + String(index) === what_ii_is?'will item1':'item1'" :key="index"
+							v-for="(item,index) in main[now].arr" :ii="now + String(index)">{{item}}</div>
+					</div>
+					<div v-else>
+						<div v-if="me.primary_account">
+							<div v-show="!(index === 4)"
+								:class="now + String(index) === what_ii_is?'will item1':'item1'" :key="index"
+								v-for="(item,index) in main[now].arr" :ii="now + String(index)">{{item}}</div>
+						</div>
+						<div v-else>
+							<div v-show="!(index === 0 || index === 1 || index === 2)"
+								:class="now + String(index) === what_ii_is?'will item1':'item1'" :key="index"
+								v-for="(item,index) in main[now].arr" :ii="now + String(index)">{{item}}</div>
+						</div>
+					</div>
 				</div>
 				<div style="margin-top:10px;" class="item c-box"
 					v-if="what_ii_is === '01' || (what_ii_is === '12' && me.primary_account) || (what_ii_is === '11' && me.primary_account)"
@@ -218,7 +231,6 @@
 					<div v-if="what_ii_is === '14' && book !== ''">
 						<div v-if="!me.primary_account && book.nn > 0" class="box_14" ii="borrow">借阅这本书</div>
 						<div v-else-if="!me.primary_account && Number(book.nn) === 0" class="no">该书暂无库存</div>
-						<div v-if="me.primary_account" class="no">管理员账户不能进行该操作</div>
 					</div>
 				</div>
 			</div>
