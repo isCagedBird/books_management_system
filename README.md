@@ -4,6 +4,10 @@
 ## demo
 ![image](https://github.com/isCagedBird/books_management_system/blob/master/img/1.png)
 ![image](https://github.com/isCagedBird/books_management_system/blob/master/img/2.png)
+- 新增其他其他方式检索数据库书籍
+![image](https://github.com/isCagedBird/books_management_system/blob/master/img/3.png)
+![image](https://github.com/isCagedBird/books_management_system/blob/master/img/4.png)
+
 
 ## 项目相关
 - 有图书管理员，读者两种类型的账号，各自拥有相关的权限
