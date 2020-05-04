@@ -199,6 +199,7 @@
 					.then(data => {
 						/* console.info(data); */
 						if (JSON.stringify(data) !== '[]') {
+							this.not_me.books.find(_ => _.number === this.book.number) && (this.book.nn += 1)
 							this.not_me = data;
 						}
 					}, error => {

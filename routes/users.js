@@ -248,6 +248,13 @@ router.post('/api/return_book', (req, res) => {
 				//约束条件下length最大为1
 				result[0].__v = null;
 				res.send(result[0]);
+				return update(db.Books, {
+					number: data.number
+				}, {
+					$inc: {
+						nn: +1
+					}
+				});
 			})
 			.catch(error => {
 				console.info(error);
